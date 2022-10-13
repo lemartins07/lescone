@@ -31,3 +31,91 @@ $s-device: 480px;
     }    
   }
 }
+
+// Função do grid
+
+@function grid($col, $offset: false) {
+  $width: calc($col / $cols * 100) + "%";
+  $result: calc(#{$width} - #{$gutter});
+  @if ($offset == true) {
+    $gutter: $gutter / 2;
+    $result: calc(#{$width} + #{$gutter});
+  }
+  @return $result;
+}
+
+div {
+  width: grid(6, false);
+}
+
+// Gera classes de grid
+
+@for $i from 1 through $cols {
+  .grid-#{$i} {
+    width: grid($i);
+  }
+}
+
+// Mixin estrutura do Grid
+
+@mixin grid-structure {
+  float: left;
+  min-height: 1px;
+  margin-left: $gutter / 2;
+  margin-right: $gutter / 2;
+
+  @include d(s){
+    width: 100%;
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+[classˆ="grid-"] {
+  @include grid-structure;
+}
+
+// Gera classes de offset
+
+@for $i from 1 through $cols {
+  .offset-#{$i} {
+    width: grid($i, true);
+    @extend %offset;
+  }
+}
+
+@include d(s){
+  %offset {
+    margin-left: 0;
+  }
+}
+
+// Mixin de clear fix
+
+@mixin clearfix {
+  &::after, &::before {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin container {
+  max-width: $l-device;
+  margin: 0px auto;
+  position: relative;
+  @include d(m) {
+    max-width: $m-device;   
+  }
+  @include d(s){
+    max-width: $s-device;      
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  @include clearfix;
+}
+
+.container {
+  @include container;
+}
