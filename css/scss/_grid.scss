@@ -3,7 +3,7 @@
 $cols: 12;
 $gutter: 20px;
 $l-device: 1200px;
-$m-device: 768px;
+$m-device: 760px;
 $s-device: 480px;
 
 // Box sizing
@@ -44,10 +44,6 @@ $s-device: 480px;
   @return $result;
 }
 
-div {
-  width: grid(6, false);
-}
-
 // Gera classes de grid
 
 @for $i from 1 through $cols {
@@ -72,7 +68,7 @@ div {
   }
 }
 
-[classˆ="grid-"] {
+[class^="grid-"] {
   @include grid-structure;
 }
 
@@ -110,12 +106,27 @@ div {
   }
   @include d(s){
     max-width: $s-device;      
-    margin-left: 10px;
-    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   @include clearfix;
 }
 
 .container {
   @include container;
+}
+
+@mixin row {
+    position: relative;
+    margin-left: - calc($gutter / 2);
+    margin-right: - calc($gutter / 2);
+    @include d(s) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    @include clearfix;
+}
+
+.row {
+  @include row;
 }
