@@ -52,8 +52,8 @@ table {
   border-spacing: 0;
 }
 
-h1 {
-  color: blue;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 /*# sourceMappingURL=style.css.map */
